@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load static %}
+{% block content %}
+
+
+{% if messages %}
+  {% for message in messages %}
+    {{ message }}
+  {% endfor %}
+{% endif %}
+
+
+<div class="row row-cols-1 row-cols-md-5 g-4">
+  {% if quotes_list|length > 0 %}
+    {% for quote in quotes_list %}    
+    <div class="col">
+      <div class="card">
+        <a href="{% url 'quotes:quote_details' quote.id %}">
+          <img style="width:150px;height:150px" src="{% static 'images/' %}{{ quote.image }}" class="card-img-top" alt="...">
+        </a>
+        <div class="card-body">
+          <h5 class="card-title">{{ quote.title }} {{ stam }}</h5>
+          <p class="card-text"> {{ quote.quoted_by }}</p>
+          <p class="card-text"> {{quote.type}}</p>
+          <a class="btn btn-danger" href="{% url 'quotes:delete' quote.id %}" onclick="confirm('are you sure you want to delete this quote?');">delete</a>
+          <a class="btn btn-info" href="{% url 'quotes:edit_quote' quote.id %}">Edit</a>
+         <!--{% if quote.user == user%}-->
+         <!--{% endif %}-->
+        </div>
+      </div>
+    </a>
+    </div>
+    {% endfor %}
+    {% else %}
+      <div>No quotes found</div>
+    {% endif %}
+</div>
+
+{% endblock %}
